@@ -1,6 +1,7 @@
 # VoxNet.pytorch
 
 A PyTorch implement of "VoxNet: A 3D Convolutional Neural Network for Real-Time Object Recognition".
+Combined with Kaishijie7's Dynamic-convolution-Pytorch, which is a PyTorch Implementation of "Dynamic Convolution: Attention over Convolution Kernels" (CVPR-2020)
 
 ## Prepare Data
 

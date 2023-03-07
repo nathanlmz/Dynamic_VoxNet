@@ -10,9 +10,8 @@ Description: VoxNet 网络结构
 
 import torch
 import torch.nn as nn
-import dynamic_conv
 from collections import OrderedDict
-from dynamic_conv import Dynamic_conv3d
+
 
 class VoxNet(nn.Module):
     def __init__(self, n_classes=10, input_shape=(32, 32, 32)):
@@ -20,19 +19,11 @@ class VoxNet(nn.Module):
         self.n_classes = n_classes
         self.input_shape = input_shape
         self.feat = torch.nn.Sequential(OrderedDict([
-            # ('conv3d_1', torch.nn.Conv3d(in_channels=1, out_channels=32, kernel_size=5, stride=2)),
-            ('conv3d_1', Dynamic_conv3d(in_planes=1, out_planes=32, kernel_size=5, stride=2, K=4, temperature=40)),
-            # ('bn1', torch.nn.BatchNorm3d(16)),
+            ('conv3d_1', torch.nn.Conv3d(in_channels=1,
+                                         out_channels=32, kernel_size=5, stride=2)),
             ('relu1', torch.nn.ReLU()),
-
-            # ('conv3d_2', Dynamic_conv3d(in_planes=16, out_planes=32, kernel_size=3, stride=1, K=4)),
-            ('bn2', torch.nn.BatchNorm3d(32)),
-            # ('relu1', torch.nn.ReLU()),
-
             ('drop1', torch.nn.Dropout(p=0.2)),
-            # ('conv3d_3', torch.nn.Conv3d(in_channels=32, out_channels=32, kernel_size=3)),
-            ('conv3d_2', Dynamic_conv3d(in_planes=32, out_planes=32, kernel_size=3,K=4,temperature=40)),
-            # ('bn3', torch.nn.BatchNorm3d(32)),
+            ('conv3d_2', torch.nn.Conv3d(in_channels=32, out_channels=32, kernel_size=3)),
             ('relu2', torch.nn.ReLU()),
             ('pool2', torch.nn.MaxPool3d(2)),
             ('drop2', torch.nn.Dropout(p=0.3))

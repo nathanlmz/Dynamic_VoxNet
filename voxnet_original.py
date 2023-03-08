@@ -20,10 +20,10 @@ class VoxNet(nn.Module):
         self.input_shape = input_shape
         self.feat = torch.nn.Sequential(OrderedDict([
             ('conv3d_1', torch.nn.Conv3d(in_channels=1,
-                                         out_channels=32, kernel_size=5, stride=2)),
+                                         out_channels=8, kernel_size=5, stride=2)),
             ('relu1', torch.nn.ReLU()),
             ('drop1', torch.nn.Dropout(p=0.2)),
-            ('conv3d_2', torch.nn.Conv3d(in_channels=32, out_channels=32, kernel_size=3)),
+            ('conv3d_2', torch.nn.Conv3d(in_channels=8, out_channels=16, kernel_size=3)),
             ('relu2', torch.nn.ReLU()),
             ('pool2', torch.nn.MaxPool3d(2)),
             ('drop2', torch.nn.Dropout(p=0.3))
@@ -34,10 +34,10 @@ class VoxNet(nn.Module):
             dim_feat *= n
 
         self.mlp = torch.nn.Sequential(OrderedDict([
-            ('fc1', torch.nn.Linear(dim_feat, 128)),
-            ('relu1', torch.nn.ReLU()),
-            ('drop3', torch.nn.Dropout(p=0.4)),
-            ('fc2', torch.nn.Linear(128, self.n_classes))
+            # ('fc1', torch.nn.Linear(dim_feat, 128)),
+            # ('relu1', torch.nn.ReLU()),
+            # ('drop3', torch.nn.Dropout(p=0.4)),
+            ('fc2', torch.nn.Linear(dim_feat, self.n_classes))
         ]))
 
     def forward(self, x):

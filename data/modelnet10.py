@@ -8,7 +8,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 sys.path.insert(0, '../utils/')
 sys.path.insert(0, './utils/')
-import binvox_rw
+from utils import binvox_rw
 
 
 class ModelNet10(Dataset):
